@@ -6,8 +6,7 @@ export const progs = [
     paidAmount: 56,
     budgetAmount: 42,
     subjects: [{name: "Русский язык", id: 0}, {name: "Математика", id: 1}, {name: "Биология", id: 8}],
-    subject_id: 1,
-    institute: "ИМЕН",
+    institutes: [{name: "ИМЕН", id: 0}],
   },
   {
     id: 2,
@@ -16,8 +15,7 @@ export const progs = [
     paidAmount: 56,
     budgetAmount: 42,
     subjects: [{name: "Русский язык", id: 0}, {name: "История", id: 2}],
-    subject_id: 2,
-    institute: "ИЖС",
+    institutes: [{name: "ЮИ", id: 1}],
   },
   {
     id: 3,
@@ -26,8 +24,7 @@ export const progs = [
     paidAmount: 56,
     budgetAmount: 42,
     subjects: [{name: "Русский язык", id: 0}, {name: "Химия", id: 3}],
-    subject_id: 3,
-    institute: "ИЖС",
+    institutes: [{name: "ИЖС", id: 3}],
   },
   {
     id: 4,
@@ -36,8 +33,7 @@ export const progs = [
     paidAmount: 56,
     budgetAmount: 42,
     subjects: [{name: "Русский язык", id: 0}, {name: "Химия", id: 3}],
-    subject_id: 3,
-    institute: "ИЖС",
+    institutes: [{name: "ИЖС", id: 3}],
   }
 ];
 
