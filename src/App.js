@@ -33,13 +33,13 @@ const App = () => {
   };
 
   const handleSubjectCheckboxClick = (subject, event) => {
-   // if (subject.id === 0) return;
+    if (subject.name === 'Русский язык') return;
     const curSubjects = [...subjects];
 
     const foundIndex = curSubjects.indexOf(subject);
     curSubjects[foundIndex] = {id: subject.id, name: subject.name, isActive: !subject.isActive};
-
     setSubjects(curSubjects);
+
     if (event.target.checked) {
        setFilterSubject(prevFilterSubject => [...[subject.id], ...prevFilterSubject])
      } else {
@@ -55,7 +55,11 @@ const App = () => {
       .map((item) => ({id: item.id, name: item.name, isActive: false}));
     const subjects = removeDuplicates(allSubjects, "id");
     setSubjects(subjects);
+
     setFilterSubject([]);
+    if (selectedCatId === 1) {
+      setFilterSubject(prevFilterSubject => [...[CHECKED_CAT_ID], ...prevFilterSubject])
+    }
 
   };
 

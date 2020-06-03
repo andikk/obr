@@ -9,7 +9,7 @@ const SubjectsList = (props) => {
       {subjects.map((subject) => {
 
         let status = subject.isActive;
-       // if (subject.id === 0) status = 'true'
+        if (subject.name === 'Русский язык') status = true;
 
         return (
           <div key={subject.id} className="form-check">
