@@ -11,13 +11,11 @@ const App = () => {
   const [progDesc, setProgDesc] = useState({});
   const [filterSubject, setFilterSubject] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [mappedSubjects, setMappedSubjects] = useState([]);
-  const [subjectsIds, setSubjectsIds] = useState([]);
   const [activeCatId, setActiveCatId] = useState(1);
 
   useEffect(() => {
     handleCatButtonClick(1);
-    setFilterSubject(prevFilterSubject => [...[CHECKED_CAT_ID], ...prevFilterSubject])
+   // setFilterSubject(prevFilterSubject => [...[CHECKED_CAT_ID], ...prevFilterSubject])
   }, []);
 
   const handleModalOpen = () => {
@@ -35,18 +33,17 @@ const App = () => {
   };
 
   const handleSubjectCheckboxClick = (subject, event) => {
+    const curSubjects = [...subjects];
+
+    const foundIndex = curSubjects.indexOf(subject);
+    curSubjects[foundIndex] = {id: subject.id, name: subject.name, isActive: !subject.isActive};
+
+    setSubjects(curSubjects);
     if (event.target.checked) {
-      setFilterSubject(prevFilterSubject => [...[subject.id], ...prevFilterSubject])
-    } else {
-      setFilterSubject(prevFilterSubject => prevFilterSubject.filter((item) => item !== subject.id))
-    }
-
-    setMappedSubjects(Object.assign({}, mappedSubjects, {[subject.id]: {id: subject.id, name: subject.name, isActive: event.target.value}}));
-
-    const updatedSubjects = subjectsIds.map(id => mappedSubjects[id]);
-    setSubjects(updatedSubjects);
-
-    console.log(updatedSubjects);
+       setFilterSubject(prevFilterSubject => [...[subject.id], ...prevFilterSubject])
+     } else {
+       setFilterSubject(prevFilterSubject => prevFilterSubject.filter((item) => item !== subject.id))
+     }
 
   };
 
@@ -58,15 +55,6 @@ const App = () => {
       .map((item) => ({id: item.id, name: item.name, isActive: false}));
     const subjects = removeDuplicates(allSubjects, "id");
     setSubjects(subjects);
-
-    setSubjectsIds(subjects.map(item => item.id));
-
-    const subjectsMapped = subjects.reduce((out, subject) => {
-      out[subject.id] = subject;
-      return out;
-    }, {});
-
-    setMappedSubjects(subjectsMapped);
 
   };
 
