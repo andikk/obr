@@ -12,6 +12,15 @@ export const removeDuplicates = (originalArray, prop) => {
   return newArray;
 };
 
+export const mergeArrayObjects = (arr1,arr2) => {
+  return arr1.map((item,i)=>{
+    if(item.id === arr2[i].id){
+      //merging two objects
+      return Object.assign({},item,arr2[i])
+    }
+  })
+};
+
 export const CATS = [{id: 1, name: "По предметам"}, {id: 2, name: "По институтам и факультетам"}];
 
 export const CAT_TYPE = {

@@ -9,11 +9,11 @@ const SubjectsList = (props) => {
       {subjects.map((subject) => {
         return (
           <div key={subject.id} className="form-check">
-            <input onChange={event => handleSubjectCheckboxClick(subject.id, event)}
+            <input onChange={event => handleSubjectCheckboxClick(subject, event)}
                    className="form-check-input"
                    type="checkbox"
                    id={`checkbox-${subject.id}-${activeCatId}`}
-                  // defaultChecked={subject.isActive}
+                   checked={subject.isActive}
 
             />
             <label className={`form-check-label ${styles.pl1}`} htmlFor={`checkbox-${subject.id}-${activeCatId}`}>

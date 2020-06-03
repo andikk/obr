@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {progs, description} from "./mock";
-import {removeDuplicates , CATS, CAT_TYPE, CHECKED_CAT_ID} from "./helper";
+import {removeDuplicates, mergeArrayObjects, CATS, CAT_TYPE, CHECKED_CAT_ID} from "./helper";
 import styles from './App.module.css';
 import ProgList from "./components/ProgList";
 import SubjectsList from "./components/SubjectsList";
@@ -10,7 +10,9 @@ const App = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [progDesc, setProgDesc] = useState({});
   const [filterSubject, setFilterSubject] = useState([]);
-  const [subjects, setActiveSubjects] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [mappedSubjects, setMappedSubjects] = useState([]);
+  const [subjectsIds, setSubjectsIds] = useState([]);
   const [activeCatId, setActiveCatId] = useState(1);
 
   useEffect(() => {
@@ -32,12 +34,20 @@ const App = () => {
     document.body.style.overflow = 'hidden'
   };
 
-  const handleSubjectCheckboxClick = (id, event) => {
+  const handleSubjectCheckboxClick = (subject, event) => {
     if (event.target.checked) {
-      setFilterSubject(prevFilterSubject => [...[id], ...prevFilterSubject])
+      setFilterSubject(prevFilterSubject => [...[subject.id], ...prevFilterSubject])
     } else {
-      setFilterSubject(prevFilterSubject => prevFilterSubject.filter((item) => item !== id))
+      setFilterSubject(prevFilterSubject => prevFilterSubject.filter((item) => item !== subject.id))
     }
+
+    setMappedSubjects(Object.assign({}, mappedSubjects, {[subject.id]: {id: subject.id, name: subject.name, isActive: event.target.value}}));
+
+    const updatedSubjects = subjectsIds.map(id => mappedSubjects[id]);
+    setSubjects(updatedSubjects);
+
+    console.log(updatedSubjects);
+
   };
 
   const handleCatButtonClick = (selectedCatId) => {
@@ -47,7 +57,16 @@ const App = () => {
       .reduce((a, b) => a.concat(b), [])
       .map((item) => ({id: item.id, name: item.name, isActive: false}));
     const subjects = removeDuplicates(allSubjects, "id");
-    setActiveSubjects(subjects);
+    setSubjects(subjects);
+
+    setSubjectsIds(subjects.map(item => item.id));
+
+    const subjectsMapped = subjects.reduce((out, subject) => {
+      out[subject.id] = subject;
+      return out;
+    }, {});
+
+    setMappedSubjects(subjectsMapped);
 
   };
 
