@@ -7,13 +7,17 @@ const SubjectsList = (props) => {
   return (
     <React.Fragment>
       {subjects.map((subject) => {
+
+        let status = subject.isActive;
+       // if (subject.id === 0) status = 'true'
+
         return (
           <div key={subject.id} className="form-check">
             <input onChange={event => handleSubjectCheckboxClick(subject, event)}
                    className="form-check-input"
                    type="checkbox"
                    id={`checkbox-${subject.id}-${activeCatId}`}
-                   checked={subject.isActive}
+                   checked={status}
 
             />
             <label className={`form-check-label ${styles.pl1}`} htmlFor={`checkbox-${subject.id}-${activeCatId}`}>

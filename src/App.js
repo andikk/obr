@@ -15,7 +15,7 @@ const App = () => {
 
   useEffect(() => {
     handleCatButtonClick(1);
-   // setFilterSubject(prevFilterSubject => [...[CHECKED_CAT_ID], ...prevFilterSubject])
+    setFilterSubject(prevFilterSubject => [...[CHECKED_CAT_ID], ...prevFilterSubject])
   }, []);
 
   const handleModalOpen = () => {
@@ -33,6 +33,7 @@ const App = () => {
   };
 
   const handleSubjectCheckboxClick = (subject, event) => {
+   // if (subject.id === 0) return;
     const curSubjects = [...subjects];
 
     const foundIndex = curSubjects.indexOf(subject);
@@ -44,7 +45,6 @@ const App = () => {
      } else {
        setFilterSubject(prevFilterSubject => prevFilterSubject.filter((item) => item !== subject.id))
      }
-
   };
 
   const handleCatButtonClick = (selectedCatId) => {
@@ -55,6 +55,7 @@ const App = () => {
       .map((item) => ({id: item.id, name: item.name, isActive: false}));
     const subjects = removeDuplicates(allSubjects, "id");
     setSubjects(subjects);
+    setFilterSubject([]);
 
   };
 
@@ -69,6 +70,7 @@ const App = () => {
     });
     if (flag) return prog;
   });
+
 
   return (
     <div className={`container _block01`}>
