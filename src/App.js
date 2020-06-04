@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import {progs, description} from "./mock";
-import {removeDuplicates, mergeArrayObjects, CATS, CAT_TYPE, CHECKED_CAT_ID} from "./helper";
+import {description} from "./mock";
+import {removeDuplicates, CATS, CAT_TYPE, CHECKED_CAT_ID} from "./helper";
 import styles from './App.module.css';
 import ProgList from "./components/ProgList";
 import SubjectsList from "./components/SubjectsList";
 import ReactModal from 'react-modal';
 
 const App = () => {
+  const [progs, setProgs] = useState([]);
+  const [isLoadingProgs, setIsLoadingProgs] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [progDesc, setProgDesc] = useState({});
   const [filterSubject, setFilterSubject] = useState([]);
@@ -14,8 +16,32 @@ const App = () => {
   const [activeCatId, setActiveCatId] = useState(1);
 
   useEffect(() => {
-    handleCatButtonClick(1);
-    setFilterSubject(prevFilterSubject => [...[CHECKED_CAT_ID], ...prevFilterSubject])
+
+    const API = 'http://localhost:3000/progs.json';
+
+    fetch(API, {
+      headers : {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong ...');
+        }
+      })
+      .then(data => {
+        setProgs(data);
+        handleCatButtonClick(1);
+        setFilterSubject(prevFilterSubject => [...[CHECKED_CAT_ID], ...prevFilterSubject]);
+
+      })
+      .catch(error => {console.log(error)});
+
+
+
   }, []);
 
   const handleModalOpen = () => {
@@ -48,12 +74,15 @@ const App = () => {
   };
 
   const handleCatButtonClick = (selectedCatId) => {
+
     setActiveCatId(selectedCatId);
     const curCatType = CAT_TYPE[selectedCatId];
+    console.log(progs);
     const allSubjects = progs.map((prog) => prog[curCatType].map((item) => item))
       .reduce((a, b) => a.concat(b), [])
       .map((item) => ({id: item.id, name: item.name, isActive: false}));
     const subjects = removeDuplicates(allSubjects, "id");
+
     setSubjects(subjects);
 
     setFilterSubject([]);
