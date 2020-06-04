@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {PureComponent } from 'react';
 import {description} from "./mock";
 import {removeDuplicates, CATS, CAT_TYPE, CHECKED_CAT_ID} from "./helper";
 import styles from './App.module.css';
@@ -6,17 +6,28 @@ import ProgList from "./components/ProgList";
 import SubjectsList from "./components/SubjectsList";
 import ReactModal from 'react-modal';
 
-const App = () => {
-  const [progs, setProgs] = useState([]);
-  const [isLoadingProgs, setIsLoadingProgs] = useState(false);
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [progDesc, setProgDesc] = useState({});
-  const [filterSubject, setFilterSubject] = useState([]);
-  const [subjects, setSubjects] = useState([]);
-  const [activeCatId, setActiveCatId] = useState(1);
+class App extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      progs: [],
+      subjects: [],
+      isLoadingProgs: false,
+      modalIsOpen: false,
+      progDesc: [],
+      filterSubject: [],
+      activeCatId: 1
+    };
+    this.handleCatButtonClick = this.handleCatButtonClick.bind(this);
+    this.handleModalOpen = this.handleModalOpen.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+    this.onAfterModalOpen = this.onAfterModalOpen.bind(this);
+    this.handleSubjectCheckboxClick = this.handleSubjectCheckboxClick.bind(this);
+    this.handleCatButtonClick = this.handleCatButtonClick.bind(this);
+  }
 
-  useEffect(() => {
 
+  componentDidMount() {
     const API = 'http://localhost:3000/progs.json';
 
     fetch(API, {
@@ -33,119 +44,123 @@ const App = () => {
         }
       })
       .then(data => {
-        setProgs(data);
-        handleCatButtonClick(1);
-        setFilterSubject(prevFilterSubject => [...[CHECKED_CAT_ID], ...prevFilterSubject]);
+        this.setState({progs: data});
 
+        this.handleCatButtonClick(1);
+        this.setState((prevState) => ({filterSubject: [...[CHECKED_CAT_ID], ...prevState.filterSubject]}));
       })
       .catch(error => {console.log(error)});
+  }
 
-
-
-  }, []);
-
-  const handleModalOpen = () => {
-    setProgDesc(description);
-    setIsOpen(true);
+  handleModalOpen = () => {
+    this.setState({progDesc: description, modalIsOpen: true});
   };
 
-  const handleModalClose = () => {
-    setIsOpen(false);
+  handleModalClose = () => {
+    this.setState({modalIsOpen: false});
     document.body.removeAttribute('style');
   };
 
-  const onAfterModalOpen = () => {
-    document.body.style.overflow = 'hidden'
+  onAfterModalOpen = () => {
+    document.body.style.overflow = 'hidden';
   };
 
-  const handleSubjectCheckboxClick = (subject, event) => {
+  handleSubjectCheckboxClick = (subject, event) => {
     if (subject.name === 'Русский язык') return;
-    const curSubjects = [...subjects];
+    const curSubjects = [...this.state.subjects];
 
     const foundIndex = curSubjects.indexOf(subject);
     curSubjects[foundIndex] = {id: subject.id, name: subject.name, isActive: !subject.isActive};
-    setSubjects(curSubjects);
+    this.setState({subjects: curSubjects});
 
     if (event.target.checked) {
-       setFilterSubject(prevFilterSubject => [...[subject.id], ...prevFilterSubject])
+      this.setState((prevState) => ({
+        filterSubject: [...[subject.id], ...prevState.filterSubject]
+      }))
      } else {
-       setFilterSubject(prevFilterSubject => prevFilterSubject.filter((item) => item !== subject.id))
+      this.setState((prevState) => ({
+        filterSubject: prevState.filterSubject.filter((item) => item !== subject.id)
+      }))
      }
   };
 
-  const handleCatButtonClick = (selectedCatId) => {
+  handleCatButtonClick = (selectedCatId) => {
+    this.setState({activeCatId: selectedCatId });
 
-    setActiveCatId(selectedCatId);
     const curCatType = CAT_TYPE[selectedCatId];
-    console.log(progs);
-    const allSubjects = progs.map((prog) => prog[curCatType].map((item) => item))
+    console.log(this.state.progs);
+    const allSubjects = this.state.progs.map((prog) => prog[curCatType].map((item) => item))
       .reduce((a, b) => a.concat(b), [])
       .map((item) => ({id: item.id, name: item.name, isActive: false}));
     const subjects = removeDuplicates(allSubjects, "id");
 
-    setSubjects(subjects);
+    this.setState({subjects: subjects, filterSubject: []});
 
-    setFilterSubject([]);
     if (selectedCatId === 1) {
-      setFilterSubject(prevFilterSubject => [...[CHECKED_CAT_ID], ...prevFilterSubject])
+      this.setState((prevState) => ({filterSubject: [...[CHECKED_CAT_ID], ...prevState.filterSubject]}))
     }
 
   };
 
-  const progsToShow = progs.filter((prog) => {
-    const curCatType = CAT_TYPE[activeCatId];
 
-    let flag = false;
-    filterSubject.forEach((item) => {
-      if (prog[curCatType].findIndex(subj => subj.id === item) !== -1) {
-        flag = true;
-      }
-    });
-    if (flag) return prog;
-  });
+  render() {
+    const {progs, filterSubject, activeCatId, subjects, modalIsOpen, progDesc} = this.state;
 
 
-  return (
-    <div className={`container _block01`}>
-      <h2>Подбор образовательных программ</h2>
-      <div className="row">
-        <div className={styles.mb3}>
-          {CATS.map((cat) => (
-            <button key={cat.id} onClick={() => handleCatButtonClick(cat.id)}
-                    className={`btn btn-primary btn-lg ${styles.mr3} ${cat.id === activeCatId ? `active`: ``}`} role="button"
-                    type="button">
-              {cat.name}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-3">
-          <SubjectsList subjects={subjects} activeCatId={activeCatId} handleSubjectCheckboxClick={handleSubjectCheckboxClick}/>
-        </div>
-        <div className="col-md-9">
-          <ProgList progs={progsToShow} handleModalOpen={handleModalOpen}/>
-        </div>
-      </div>
-      <ReactModal
-        isOpen={modalIsOpen}
-        contentLabel="onRequestClose Example"
-        onAfterOpen={onAfterModalOpen}
-        onRequestClose={handleModalClose}
-        ariaHideApp={false}
-        style={
-          { overlay: {},
-            content: {backgroundColor:"azure", top: "140px", zIndex: "2"}
-          }
+    const progsToShow = progs.filter((prog) => {
+      const curCatType = CAT_TYPE[activeCatId];
+
+      let flag = false;
+      filterSubject.forEach((item) => {
+        if (prog[curCatType].findIndex(subj => subj.id === item) !== -1) {
+          flag = true;
         }
-      >
-        <p>{progDesc.name}</p>
-        <p>{progDesc.term}</p>
-        <p>{progDesc.paidAmount}</p>
-        <button onClick={handleModalClose}>Close Modal</button>
-      </ReactModal>
-    </div>
-  );
-};
+      });
+      if (flag) return prog;
+    });
+
+    return (
+      <div className={`container _block01`}>
+        <h2>Подбор образовательных программ</h2>
+        <div className="row">
+          <div className={styles.mb3}>
+            {CATS.map((cat) => (
+              <button key={cat.id} onClick={() => this.handleCatButtonClick(cat.id)}
+                      className={`btn btn-primary btn-lg ${styles.mr3} ${cat.id === activeCatId ? `active`: ``}`} role="button"
+                      type="button">
+                {cat.name}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-3">
+            <SubjectsList subjects={subjects} activeCatId={activeCatId} handleSubjectCheckboxClick={this.handleSubjectCheckboxClick}/>
+          </div>
+          <div className="col-md-9">
+            <ProgList progs={progsToShow} handleModalOpen={this.handleModalOpen}/>
+          </div>
+        </div>
+        <ReactModal
+          isOpen={modalIsOpen}
+          contentLabel="onRequestClose Example"
+          onAfterOpen={this.onAfterModalOpen}
+          onRequestClose={this.handleModalClose}
+          ariaHideApp={false}
+          style={
+            { overlay: {},
+              content: {backgroundColor:"azure", top: "140px", zIndex: "2"}
+            }
+          }
+        >
+          <p>{progDesc.name}</p>
+          <p>{progDesc.term}</p>
+          <p>{progDesc.paidAmount}</p>
+          <button onClick={this.handleModalClose}>Close Modal</button>
+        </ReactModal>
+      </div>
+    )
+  }
+}
 
 export default App;
