@@ -1,9 +1,10 @@
 import React, {PureComponent } from 'react';
-import {description} from "./mock";
+//import {description} from "./mock";
 import {removeDuplicates, CATS, CAT_TYPE, CHECKED_CAT_ID} from "./helper";
 import styles from './App.module.css';
 import ProgList from "./components/ProgList";
 import SubjectsList from "./components/SubjectsList";
+import ModalContent from "./components/ModalContent";
 import ReactModal from 'react-modal';
 
 class App extends PureComponent {
@@ -14,9 +15,9 @@ class App extends PureComponent {
       subjects: [],
       isLoadingProgs: false,
       modalIsOpen: false,
-      progDesc: [],
       filterSubject: [],
-      activeCatId: 1
+      activeCatId: 1,
+      error: ''
     };
     this.handleCatButtonClick = this.handleCatButtonClick.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
@@ -28,6 +29,7 @@ class App extends PureComponent {
 
 
   componentDidMount() {
+    this.setState({isLoadingProgs: true});
     const API = 'http://localhost:3000/progs.json';
 
     fetch(API, {
@@ -44,16 +46,14 @@ class App extends PureComponent {
         }
       })
       .then(data => {
-        this.setState({progs: data});
-
+        this.setState((prevState) => ({progs: data, filterSubject: [...[CHECKED_CAT_ID], ...prevState.filterSubject], isLoadingProgs: false}));
         this.handleCatButtonClick(1);
-        this.setState((prevState) => ({filterSubject: [...[CHECKED_CAT_ID], ...prevState.filterSubject]}));
       })
-      .catch(error => {console.log(error)});
+      .catch(error => {console.log(error);  this.setState({ error, isLoadingProgs: false })});
   }
 
   handleModalOpen = () => {
-    this.setState({progDesc: description, modalIsOpen: true});
+    this.setState({modalIsOpen: true});
   };
 
   handleModalClose = () => {
@@ -104,8 +104,15 @@ class App extends PureComponent {
 
 
   render() {
-    const {progs, filterSubject, activeCatId, subjects, modalIsOpen, progDesc} = this.state;
+    const {progs, filterSubject, activeCatId, subjects, modalIsOpen, progDesc, error, isLoadingProgs} = this.state;
 
+    if (error) {
+      return <p  style={{textAlign: "center", paddingTop: "1rem", paddingBottom: "1rem"}}>Ошибка загрузки данных. Описание ошибки: {error.message}</p>;
+    }
+
+    if (isLoadingProgs) {
+      return <p style={{textAlign: "center", paddingTop: "1rem", paddingBottom: "1rem"}}>Загрузка данных ...</p>;
+    }
 
     const progsToShow = progs.filter((prog) => {
       const curCatType = CAT_TYPE[activeCatId];
@@ -153,9 +160,7 @@ class App extends PureComponent {
             }
           }
         >
-          <p>{progDesc.name}</p>
-          <p>{progDesc.term}</p>
-          <p>{progDesc.paidAmount}</p>
+          <ModalContent porogDesc={progDesc}/>
           <button onClick={this.handleModalClose}>Close Modal</button>
         </ReactModal>
       </div>

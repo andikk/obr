@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "name": "Наименование программы",
+  "term": "4 года",
+  "paidAmount": 56,
+  "budgetAmount": 42,
+  "subject": "Математика",
+  "institute": "ИМЕН",
+  "price": 150000,
+  "about": "О программе в html",
+  "disciplines": "Что я буду изучать в html",
+  "job": "Кем я буду работать в html"
+}
