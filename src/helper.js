@@ -19,4 +19,3 @@ export const CAT_TYPE = {
   "2": "institutes"
 };
 
-export const CHECKED_CAT_ID = 0;

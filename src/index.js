@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App url={"http://localhost:3000/progs.json"} />
   </React.StrictMode>,
   document.getElementById('root')
 );

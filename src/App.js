@@ -1,23 +1,22 @@
 import React, {PureComponent } from 'react';
-//import {description} from "./mock";
-import {removeDuplicates, CATS, CAT_TYPE, CHECKED_CAT_ID} from "./helper";
+import {removeDuplicates, CATS, CAT_TYPE} from "./helper";
 import styles from './App.module.css';
 import ProgList from "./components/ProgList";
 import SubjectsList from "./components/SubjectsList";
-import ModalContent from "./components/ModalContent";
 import ReactModal from 'react-modal';
+import NewModalContent from "./components/NewModalContent.jsx";
+import withFetching from "./components/WithFetching";
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      progs: [],
       subjects: [],
       isLoadingProgs: false,
       modalIsOpen: false,
       filterSubject: [],
       activeCatId: 1,
-      error: ''
+      error: null
     };
     this.handleCatButtonClick = this.handleCatButtonClick.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
@@ -27,29 +26,10 @@ class App extends PureComponent {
     this.handleCatButtonClick = this.handleCatButtonClick.bind(this);
   }
 
-
-  componentDidMount() {
-    this.setState({isLoadingProgs: true});
-    const API = 'http://localhost:3000/progs.json';
-
-    fetch(API, {
-      headers : {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Something went wrong ...');
-        }
-      })
-      .then(data => {
-        this.setState((prevState) => ({progs: data, filterSubject: [...[CHECKED_CAT_ID], ...prevState.filterSubject], isLoadingProgs: false}));
-        this.handleCatButtonClick(1);
-      })
-      .catch(error => {console.log(error);  this.setState({ error, isLoadingProgs: false })});
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.data !== this.props.data) {
+      this.handleCatButtonClick(1);
+    }
   }
 
   handleModalOpen = () => {
@@ -59,10 +39,12 @@ class App extends PureComponent {
   handleModalClose = () => {
     this.setState({modalIsOpen: false});
     document.body.removeAttribute('style');
+    document.querySelector('._professions-slider').style.zIndex = '10';
   };
 
   onAfterModalOpen = () => {
     document.body.style.overflow = 'hidden';
+    document.querySelector('._professions-slider').style.zIndex = '-1';
   };
 
   handleSubjectCheckboxClick = (subject, event) => {
@@ -85,32 +67,33 @@ class App extends PureComponent {
   };
 
   handleCatButtonClick = (selectedCatId) => {
+    const progs = this.props.data;
+
     this.setState({activeCatId: selectedCatId });
 
     const curCatType = CAT_TYPE[selectedCatId];
-    console.log(this.state.progs);
-    const allSubjects = this.state.progs.map((prog) => prog[curCatType].map((item) => item))
+
+    const allSubjects = progs.map((prog) => prog[curCatType].map((item) => item))
       .reduce((a, b) => a.concat(b), [])
       .map((item) => ({id: item.id, name: item.name, isActive: false}));
     const subjects = removeDuplicates(allSubjects, "id");
 
     this.setState({subjects: subjects, filterSubject: []});
-
-    if (selectedCatId === 1) {
-      this.setState((prevState) => ({filterSubject: [...[CHECKED_CAT_ID], ...prevState.filterSubject]}))
-    }
-
   };
 
-
   render() {
-    const {progs, filterSubject, activeCatId, subjects, modalIsOpen, progDesc, error, isLoadingProgs} = this.state;
+
+    const {filterSubject, activeCatId, modalIsOpen, subjects} = this.state;
+
+    const error = this.props.error;
+    const isLoadingProgs = this.isLoading;
+    const progs = this.props.data;
 
     if (error) {
-      return <p  style={{textAlign: "center", paddingTop: "1rem", paddingBottom: "1rem"}}>Ошибка загрузки данных. Описание ошибки: {error.message}</p>;
+      return <p style={{textAlign: "center", paddingTop: "1rem", paddingBottom: "1rem"}}>Ошибка загрузки данных. Описание ошибки: {error.message}</p>;
     }
 
-    if (isLoadingProgs) {
+    if (isLoadingProgs || progs === null) {
       return <p style={{textAlign: "center", paddingTop: "1rem", paddingBottom: "1rem"}}>Загрузка данных ...</p>;
     }
 
@@ -160,12 +143,13 @@ class App extends PureComponent {
             }
           }
         >
-          <ModalContent porogDesc={progDesc}/>
           <button onClick={this.handleModalClose}>Close Modal</button>
+          <NewModalContent url={'http://localhost:3000/description.json'}/>
         </ReactModal>
       </div>
     )
   }
 }
 
-export default App;
+export {App}
+export default withFetching(App);
