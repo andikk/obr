@@ -116,7 +116,7 @@ class App extends PureComponent {
           <div className={styles.mb3}>
             {CATS.map((cat) => (
               <button key={cat.id} onClick={() => this.handleCatButtonClick(cat.id)}
-                      className={`btn btn-primary btn-lg ${styles.mr3} ${cat.id === activeCatId ? `active`: ``}`} role="button"
+                      className={`_btn-lnk ${styles.btnTab} ${cat.id === activeCatId ? `activeTab`: ``}`} role="button"
                       type="button">
                 {cat.name}
               </button>
@@ -124,10 +124,10 @@ class App extends PureComponent {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-2">
             <SubjectsList subjects={subjects} activeCatId={activeCatId} handleSubjectCheckboxClick={this.handleSubjectCheckboxClick}/>
           </div>
-          <div className="col-md-9">
+          <div className="col-md-10">
             <ProgList progs={progsToShow} handleModalOpen={this.handleModalOpen}/>
           </div>
         </div>
@@ -139,7 +139,7 @@ class App extends PureComponent {
           ariaHideApp={false}
           style={
             { overlay: {},
-              content: {backgroundColor:"azure", top: "140px", zIndex: "2"}
+              content: {backgroundColor: "#e9f6ff", top: "140px", zIndex: "2"}
             }
           }
         >

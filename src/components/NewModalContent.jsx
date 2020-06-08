@@ -6,10 +6,6 @@ const NewModalContent = (props) => {
     const {error, isLoading} = props;
     const progDesc = props.data;
 
-    // if (progDesc === null) {
-    //   return null;
-    // }
-
     if (error) {
       return <p  style={{textAlign: "center", paddingTop: "1rem", paddingBottom: "1rem"}}>Ошибка загрузки данных. Описание ошибки: {error.message}</p>;
     }

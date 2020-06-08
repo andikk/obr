@@ -9,10 +9,10 @@ const ProgList = (props) => {
       {progs.map((prog) => (
         <li className={styles.progItem} key={prog.id}>
           <p>{prog.name}</p>
-          <p>{prog.term}</p>
-          <p>{prog.paidAmount}</p>
-          <p>{prog.budgetAmount}</p>
-          <p><button onClick={handleModalOpen}>Открыть</button></p>
+          <p>{prog.term} <span>{prog.form}</span></p>
+          <p>{prog.paidAmount} <span>Платных мест</span></p>
+          <p>{prog.budgetAmount} <span>Бюджетных мест</span></p>
+          <p><button className={`_btn01 ${styles.btnDetail}`} onClick={handleModalOpen}> Подробнее </button></p>
         </li>
       ))}
     </ul>

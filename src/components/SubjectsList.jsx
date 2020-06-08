@@ -12,15 +12,13 @@ const SubjectsList = (props) => {
         if (subject.name === 'Русский язык') status = true;
 
         return (
-          <div key={subject.id} className="form-check">
+          <div key={subject.id} style={{whiteSpace: "nowrap", display: "flex"}}>
             <input onChange={event => handleSubjectCheckboxClick(subject, event)}
-                   className="form-check-input"
                    type="checkbox"
                    id={`checkbox-${subject.id}-${activeCatId}`}
                    checked={status}
-
             />
-            <label className={`form-check-label ${styles.pl1}`} htmlFor={`checkbox-${subject.id}-${activeCatId}`}>
+            <label style={{whiteSpace: "normal"}} className={`${styles.subject}`} htmlFor={`checkbox-${subject.id}-${activeCatId}`}>
               {subject.name}
             </label>
           </div>

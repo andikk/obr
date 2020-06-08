@@ -5,6 +5,7 @@ export const progs = [
     term: "4 года",
     paidAmount: 56,
     budgetAmount: 42,
+    form: "Очное обучение",
     subjects: [{name: "Русский язык", id: 0}, {name: "Математика", id: 1}, {name: "Биология", id: 8}],
     institutes: [{name: "ИМЕН", id: 0}],
   },
@@ -14,6 +15,7 @@ export const progs = [
     term: "4 года",
     paidAmount: 56,
     budgetAmount: 42,
+    form: "Заочное обучение",
     subjects: [{name: "Русский язык", id: 0}, {name: "История", id: 2}],
     institutes: [{name: "ЮИ", id: 1}],
   },
@@ -23,6 +25,7 @@ export const progs = [
     term: "4 года",
     paidAmount: 56,
     budgetAmount: 42,
+    form: "Очное обучение",
     subjects: [{name: "Русский язык", id: 0}, {name: "Химия", id: 3}],
     institutes: [{name: "ИЖС", id: 3}],
   },
@@ -32,6 +35,7 @@ export const progs = [
     term: "4 года",
     paidAmount: 56,
     budgetAmount: 42,
+    form: "Заочное обучение",
     subjects: [{name: "Русский язык", id: 0}, {name: "Химия", id: 3}],
     institutes: [{name: "ИЖС", id: 3}],
   }
@@ -45,10 +49,9 @@ export const description = {
   budgetAmount: 42,
   subject: "Математика",
   institute: "ИМЕН",
+  form: "Очное обучение",
   price: 150000,
   about: "О программе в html",
   disciplines: "Что я буду изучать в html",
   job: "Кем я буду работать в html",
 };
-
-

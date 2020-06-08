@@ -6,6 +6,7 @@
   "budgetAmount": 42,
   "subject": "Математика",
   "institute": "ИМЕН",
+  "form": "Заочное обучение",
   "price": 150000,
   "about": "О программе в html",
   "disciplines": "Что я буду изучать в html",
