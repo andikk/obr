@@ -2,7 +2,6 @@ import React from 'react';
 import withFetching from "./WithFetching.jsx";
 
 const NewModalContent = (props) => {
-
     const {error, isLoading} = props;
     const progDesc = props.data;
 
@@ -16,9 +15,7 @@ const NewModalContent = (props) => {
 
     return (
       <div>
-        <p>{progDesc.name}</p>
-        <p>{progDesc.term}</p>
-        <p>{progDesc.paidAmount}</p>
+        <h2>{progDesc.name}</h2>
       </div>
     )
 };

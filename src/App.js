@@ -1,5 +1,5 @@
 import React, {PureComponent } from 'react';
-import {removeDuplicates, CATS, CAT_TYPE} from "./helper";
+import {removeDuplicates, CATS, CAT_TYPE, URL_PROG} from "./helper";
 import styles from './App.module.css';
 import ProgList from "./components/ProgList";
 import SubjectsList from "./components/SubjectsList";
@@ -16,7 +16,8 @@ class App extends PureComponent {
       modalIsOpen: false,
       filterSubject: [],
       activeCatId: 1,
-      error: null
+      error: null,
+      activeProgId: null,
     };
     this.handleCatButtonClick = this.handleCatButtonClick.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
@@ -32,7 +33,8 @@ class App extends PureComponent {
     }
   }
 
-  handleModalOpen = () => {
+  handleModalOpen = (progId) => {
+    this.setState({activeProgId: progId});
     this.setState({modalIsOpen: true});
   };
 
@@ -83,7 +85,7 @@ class App extends PureComponent {
 
   render() {
 
-    const {filterSubject, activeCatId, modalIsOpen, subjects} = this.state;
+    const {filterSubject, activeCatId, modalIsOpen, subjects, activeProgId} = this.state;
 
     const error = this.props.error;
     const isLoadingProgs = this.isLoading;
@@ -143,8 +145,8 @@ class App extends PureComponent {
             }
           }
         >
-          <button onClick={this.handleModalClose}>Close Modal</button>
-          <NewModalContent url={'http://localhost:3000/description.json'}/>
+          <button className={styles.btnClose} onClick={this.handleModalClose}>&times;</button>
+          <NewModalContent url={URL_PROG + activeProgId}/>
         </ReactModal>
       </div>
     )

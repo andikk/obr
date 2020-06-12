@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {URL_LIST} from "./helper";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App url={"http://localhost:3000/progs.json"} />
+    <App url={URL_LIST} />
   </React.StrictMode>,
   document.getElementById('root')
 );
