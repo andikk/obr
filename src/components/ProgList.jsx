@@ -9,23 +9,36 @@ const ProgList = (props) => {
       {(progs.length === 0) && <p style={{textAlign: "center"}}>Выберите предмет, институт или факультет</p>}
 
       {(progs.length > 0) &&
-        <div className={styles.progList}>
+        <div className='prog-list'>
           {progs.map((prog) => (
-            <div className={styles.progItem} key={prog.id}>
-              <p>{prog.name}</p>
-              <div style={{flex: 1}}>
+            <div className='prog-list__item' key={prog.id}>
+
+              <p className='prog-list__name-container'>{prog.name}</p>
+
+              <div className='prog-list__info-container'>
                 {prog.info.map((item) => (
-                    <div style = {{display: 'flex', justifyContent: 'space-around'}}>
-                      <p>{item.term} <span>{item.form}</span></p>
-                      <p>{item.paidAmount} <span>Платных мест</span></p>
-                      <p>{item.budgetAmount} <span>Бюджетных мест</span></p>
+                  <div className='info' key={item.id}>
+                    <div className='info__item'>
+                      <p className='info__value'>{item.term}</p>
+                      <p className='info__text'>{item.form}</p>
                     </div>
+                    <div className='info__item'>
+                      <p className='info__value'>{item.paidAmount}</p>
+                      <p className='info__text'>Платных мест</p>
+                    </div>
+                    <div className='info__item'>
+                      <p className='info__value'>{item.budgetAmount}</p>
+                      <p className='info__text'>Бюджетных мест</p>
+                    </div>
+                  </div>
                 ))}
               </div>
 
-
-              <p><button className={`_btn01 ${styles.btnDetail}`} onClick={() => handleModalOpen(prog.id)}> Подробнее </button></p>
+              <div className='prog-list__btn-container'>
+                <button className='btn btn-primary prog-list__btn' onClick={() => handleModalOpen(prog.id)}> Подробнее </button>
+              </div>
             </div>
+
           ))}
         </div>}
 

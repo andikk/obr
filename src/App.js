@@ -112,19 +112,19 @@ class App extends PureComponent {
     });
 
     return (
-      <div className={`container _block01`}>
+      <div className='container _block01'>
         <h2>Подбор образовательных программ</h2>
-        <div className="row">
-          <div className={styles.mb3}>
-            {CATS.map((cat) => (
-              <button key={cat.id} onClick={() => this.handleCatButtonClick(cat.id)}
-                      className={`_btn-lnk ${styles.btnTab} ${cat.id === activeCatId ? `activeTab`: ``}`} role="button"
-                      type="button">
-                {cat.name}
-              </button>
-            ))}
-          </div>
+
+        <div className='tabs'>
+          {CATS.map((cat) => (
+            <button key={cat.id} onClick={() => this.handleCatButtonClick(cat.id)}
+                    className={`_btn-lnk tabs__btn ${cat.id === activeCatId ? `tabs__btn--active`: ``}`} role="button"
+                    type="button">
+              {cat.name}
+            </button>
+          ))}
         </div>
+
         <div className="row">
           <div className="col-md-2">
             <SubjectsList subjects={subjects} activeCatId={activeCatId} handleSubjectCheckboxClick={this.handleSubjectCheckboxClick}/>
@@ -145,7 +145,7 @@ class App extends PureComponent {
             }
           }
         >
-          <button className={styles.btnClose} onClick={this.handleModalClose}>&times;</button>
+          <button className='btn-close' onClick={this.handleModalClose}>&times;</button>
           <NewModalContent url={URL_PROG + activeProgId}/>
         </ReactModal>
       </div>

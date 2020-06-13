@@ -18,7 +18,7 @@ const SubjectsList = (props) => {
                    id={`checkbox-${subject.id}-${activeCatId}`}
                    checked={status}
             />
-            <label style={{whiteSpace: "normal"}} className={`${styles.subject}`} htmlFor={`checkbox-${subject.id}-${activeCatId}`}>
+            <label style={{whiteSpace: "normal"}} className='subject' htmlFor={`checkbox-${subject.id}-${activeCatId}`}>
               {subject.name}
             </label>
           </div>
