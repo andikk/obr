@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from '../App.module.css';
 
 const SubjectsList = (props) => {
   const {subjects, handleSubjectCheckboxClick, activeCatId} = props;

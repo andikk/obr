@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {URL_LIST} from "./helper";
+import {APP_URL} from "./helper";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App url={URL_LIST} />
+    <App url={APP_URL + 'api/list-abit'} />
   </React.StrictMode>,
   document.getElementById('root')
 );

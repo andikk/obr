@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from '../App.module.css';
 
 const ProgList = (props) => {
   const {progs, handleModalOpen} = props;
@@ -23,12 +22,16 @@ const ProgList = (props) => {
                       <p className='info__text'>{item.form}</p>
                     </div>
                     <div className='info__item'>
+                      <p className='info__value'>{item.budgetAmount}</p>
+                      <p className='info__text'>Бюджетных мест</p>
+                    </div>
+                    <div className='info__item'>
                       <p className='info__value'>{item.paidAmount}</p>
                       <p className='info__text'>Платных мест</p>
                     </div>
                     <div className='info__item'>
-                      <p className='info__value'>{item.budgetAmount}</p>
-                      <p className='info__text'>Бюджетных мест</p>
+                      <p className='info__value'>{item.price} <span>тыс.руб</span></p>
+                      <p className='info__text'>Стоимость</p>
                     </div>
                   </div>
                 ))}

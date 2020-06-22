@@ -30,7 +30,6 @@ const withFetching = (Component) => {
           }
         })
         .then(data => {
-          console.log(data.data);
           this.setState({data: data.data, isLoading: false});
         })
         .catch(error => {

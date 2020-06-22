@@ -1,6 +1,5 @@
 import React, {PureComponent } from 'react';
-import {removeDuplicates, CATS, CAT_TYPE, URL_PROG} from "./helper";
-import styles from './App.module.css';
+import {removeDuplicates, CATS, CAT_TYPE, APP_URL} from "./helper";
 import ProgList from "./components/ProgList";
 import SubjectsList from "./components/SubjectsList";
 import ReactModal from 'react-modal';
@@ -42,11 +41,13 @@ class App extends PureComponent {
     this.setState({modalIsOpen: false});
     document.body.removeAttribute('style');
     document.querySelector('._professions-slider').style.zIndex = '10';
+    document.querySelector('header').style.zIndex = '10';
   };
 
   onAfterModalOpen = () => {
     document.body.style.overflow = 'hidden';
     document.querySelector('._professions-slider').style.zIndex = '-1';
+    document.querySelector('header').style.zIndex = '-1';
   };
 
   handleSubjectCheckboxClick = (subject, event) => {
@@ -139,14 +140,14 @@ class App extends PureComponent {
           onAfterOpen={this.onAfterModalOpen}
           onRequestClose={this.handleModalClose}
           ariaHideApp={false}
+          portalClassName="detail__modal"
           style={
-            { overlay: {},
-              content: {backgroundColor: "#e9f6ff", top: "140px", zIndex: "2"}
+            { overlay: {backgroundColor: "rgba(27, 26, 26, 0.8)"},
             }
           }
         >
           <button className='btn-close' onClick={this.handleModalClose}>&times;</button>
-          <NewModalContent url={URL_PROG + activeProgId}/>
+          <NewModalContent url={APP_URL +'api/prog/' + activeProgId}/>
         </ReactModal>
       </div>
     )

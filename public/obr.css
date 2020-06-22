@@ -1,12 +1,13 @@
 .tabs {
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 .tabs__btn {
   margin-right: 5rem;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
   outline: none;
+  text-align: left;
 }
 
 .tabs__btn.tabs__btn--active {
@@ -35,6 +36,8 @@
 .prog-list__name-container {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
 .prog-list__info-container {
@@ -65,7 +68,8 @@
 }
 
 .info {
-  display: flex
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .info__item {
@@ -75,18 +79,80 @@
 
 .info__value {
   font-weight: bold;
+  font-size: 1.3rem;
+  margin-bottom: 0;
+}
+
+.info__value span {
+  font-weight: normal;
+  font-size: 1rem;
 }
 
 .btn-close {
   background-color: transparent;
   border: none;
-  font-size: 2rem;
-  position: absolute;
-  right: 20px;
-  top: 10px;
+  font-size: 3rem;
+  position: fixed;
+  right: 66px;
+  top: 34px;
   outline: none;
   z-index: 10;
 }
+
+.detail h2, h3, h4 {
+  margin-bottom: 0.5rem;
+  padding-top: 2rem;
+}
+
+.detail__institute {
+  padding-top: 0 !important;
+  padding-bottom: 1rem !important;
+}
+
+.detail__progname {
+  padding-top: 0 !important;
+}
+
+.detail p {
+  white-space: pre-line;
+}
+
+.detail__progname {
+  z-index: 2
+}
+
+.detail .info {
+  padding-top: 2rem;
+}
+
+.detail__subject-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.detail__subject-name {
+  margin-right: 1rem;
+  font-size: 1.2rem;
+}
+
+.graduates__item {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.graduates__name {
+  padding-top: 0.5rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.graduates__image {
+  max-width: 100%;
+  height: auto;
+}
+
 
 @media (min-width: 1200px) {
   .prog-list__item {
@@ -107,4 +173,18 @@
     align-items: center;
     justify-content: center;
   }
+
+  .graduates__item {
+    flex-wrap: nowrap;
+  }
+
+  .graduates__image-wrapper {
+    flex: 0 0 200px;
+  }
+
+  .graduates__text {
+    flex: 1;
+    padding-left: 1rem;
+  }
+
 }

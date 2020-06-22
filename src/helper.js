@@ -19,6 +19,7 @@ export const CAT_TYPE = {
   "2": "institutes"
 };
 
-export const URL_LIST = 'http://api/api/list';
-export const URL_PROG = 'http://api/api/prog/'
+//export const APP_URL = 'http://api/';
+
+export const APP_URL = 'https://edprogs.ncfu.ru/';
 
