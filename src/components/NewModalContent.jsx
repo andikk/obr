@@ -57,53 +57,75 @@ const NewModalContent = (props) => {
         </div>
 
         <div className="detail__description">
-            <h3>О программе</h3>
-            <p>{progDesc.about}</p>
 
-            <h3>Что я буду изучать</h3>
-            <p>{progDesc.disciplines}</p>
+            {(progDesc.about) &&
+                <div>
+                    <h3>О программе</h3>
+                    <p>{progDesc.about}</p>
+                </div>
+            }
 
-            <h3>Практики и стажировки</h3>
-            <p>{progDesc.practice}</p>
+            {(progDesc.disciplines) &&
+                <div>
+                    <h3>Что я буду изучать</h3>
+                    <p>{progDesc.disciplines}</p>
+                </div>
+            }
 
-            <h3>Кем я буду работать</h3>
-            <p>{progDesc.job}</p>
+            {(progDesc.practice) &&
+                <div>
+                    <h3>Практики и стажировки</h3>
+                    <p>{progDesc.practice}</p>
+                </div>
+            }
 
-            <h3>Профессии будущего</h3>
-            <p>{progDesc.professions}</p>
+            {(progDesc.job) &&
+                <div>
+                    <h3>Кем я буду работать</h3>
+                    <p>{progDesc.job}</p>
+                </div>
+            }
 
-            <h3>Наши выпускники работают в следующих организациях и учреждениях</h3>
-            <ul>{progDesc.companies.split('\n').map((item) => (
-                <li>
-                    {item}
-                </li>
-              ))}
-            </ul>
+            {(progDesc.professions) &&
+                <div>
+                    <h3>Профессии будущего</h3>
+                    <p>{progDesc.professions}</p>
+                </div>
+            }
+
+            {(progDesc.companies) &&
+                <div>
+                    <h3>Наши выпускники работают в следующих организациях и учреждениях</h3>
+                    <ul>{progDesc.companies.split('\n').map((item) => (
+                        <li>
+                            {item}
+                        </li>
+                    ))}
+                    </ul>
+                </div>
+            }
+
 
             {(progDesc.graduates.length > 0) &&
+                <div>
+                    <h3>Наши выпускники</h3>
+                    <p>{progDesc.graduate}</p>
 
-            <div>
-                <h3>Наши выпускники</h3>
-                <p>{progDesc.graduate}</p>
-
-                <div className="graduates">
-                    {progDesc.graduates.map((graduate) => (
-                      <div className="graduates__item" key={graduate.id}>
-                          <div className="graduates__image-wrapper">
-                              <img className="graduates__image" src={APP_URL + 'uploads/' + graduate.file}/>
+                    <div className="graduates">
+                        {progDesc.graduates.map((graduate) => (
+                          <div className="graduates__item" key={graduate.id}>
+                              <div className="graduates__image-wrapper">
+                                  <img alt={graduate.name} className="graduates__image" src={APP_URL + 'uploads/' + graduate.file}/>
+                              </div>
+                              <div className="graduates__text">
+                                  <p className="graduates__name">{graduate.name}</p>
+                                  <p className="graduates__description">{graduate.description}</p>
+                              </div>
                           </div>
-                          <div className="graduates__text">
-                              <p className="graduates__name">{graduate.name}</p>
-                              <p className="graduates__description">{graduate.description}</p>
-                          </div>
-                      </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-
-            </div>}
-
-
-
+            }
 
         </div>
       </div>
