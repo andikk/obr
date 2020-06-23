@@ -115,7 +115,9 @@ const NewModalContent = (props) => {
                         {progDesc.graduates.map((graduate) => (
                           <div className="graduates__item" key={graduate.id}>
                               <div className="graduates__image-wrapper">
-                                  <img alt={graduate.name} className="graduates__image" src={APP_URL + 'uploads/' + graduate.file}/>
+                                  {(graduate.file) &&
+                                    <img alt={graduate.name} className="graduates__image" src={APP_URL + 'uploads/' + graduate.file}/>
+                                  }
                               </div>
                               <div className="graduates__text">
                                   <p className="graduates__name">{graduate.name}</p>
