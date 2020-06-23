@@ -1,13 +1,10 @@
-.tabs {
-  margin-bottom: 3rem;
-}
-
 .tabs__btn {
   margin-right: 5rem;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
   outline: none;
   text-align: left;
+  margin-bottom: 1.5rem;
 }
 
 .tabs__btn.tabs__btn--active {
@@ -17,6 +14,7 @@
 .subject {
   padding-left: 1rem;
   font-size: 1.2rem;
+  margin-bottom: 1.2rem;
 }
 
 .prog-list {
@@ -34,21 +32,23 @@
 }
 
 .prog-list__name-container {
+  display: block;
   padding-right: 0.5rem;
   padding-left: 0.5rem;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: bold;
 }
 
 .prog-list__info-container {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
+  flex: 100%;
 }
 
 .prog-list__btn-container {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
-  width: 100%;
+  margin: 0 auto;
 }
 
 .prog-list__btn {
@@ -187,4 +187,19 @@
     padding-left: 1rem;
   }
 
+  .tabs__btn {
+    font-size: 22px;
+  }
+
+}
+
+@media (min-width: 1450px) {
+  .ReactModal__Content.ReactModal__Content--after-open {
+    left: 230px!important;
+    right: 230px!important;
+  }
+
+  .btn-close {
+    right: 240px;
+  }
 }
