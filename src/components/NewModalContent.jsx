@@ -108,9 +108,12 @@ const NewModalContent = (props) => {
 
             {(progDesc.graduates.length > 0) &&
                 <div>
-                    <h3>Наши выпускники</h3>
-                    <p>{progDesc.graduate}</p>
-
+                    {(progDesc.graduate) &&
+                        <div>
+                            <h3>Наши выпускники</h3>
+                            <p>{progDesc.graduate}</p>
+                        </div>
+                    }
                     <div className="graduates">
                         {progDesc.graduates.map((graduate) => (
                           <div className="graduates__item" key={graduate.id}>

@@ -100,7 +100,7 @@ class App extends PureComponent {
       return <p style={{textAlign: "center", paddingTop: "1rem", paddingBottom: "1rem"}}>Загрузка данных ...</p>;
     }
 
-    const progsToShow = progs.filter((prog) => {
+    let progsToShow = progs.filter((prog) => {
       const curCatType = CAT_TYPE[activeCatId];
 
       let flag = false;
@@ -111,6 +111,32 @@ class App extends PureComponent {
       });
       if (flag) return prog;
     });
+
+    const isInFilter = (prog) => {
+      const progSubjIds = prog.subjects.map((subj) => subj.id);
+
+      if (filterSubject.length < 2) {
+        let flag = false;
+        filterSubject.forEach((item) => {
+          if (progSubjIds.includes(item)) {
+            flag = true;
+          }
+        });
+
+        if (flag) return true;
+      } else {
+        if (progSubjIds.length === [...filterSubject, 1].length && progSubjIds.sort().every(function(value, index) { return value === [...filterSubject, 1].sort()[index]})) {
+        //if (JSON.stringify(progSubjIds) == JSON.stringify([...filterSubject, 1])) {
+          return true
+        } else {
+          return false
+        }
+      }
+    };
+
+    if (activeCatId === 1) {
+      progsToShow = progs.filter(isInFilter);
+    }
 
     return (
       <div className='container _block01'>
