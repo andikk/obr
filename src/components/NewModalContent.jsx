@@ -37,7 +37,7 @@ const NewModalContent = (props) => {
           {progDesc.info.map((item) => (
             <div className='info' key={item.id}>
               <div className='info__item'>
-                  <p className='info__value'>{item.term} <span>{item.term === '5' ? `лет` : `года`}</span></p>
+                  <p className='info__value'>{item.term} <span>{(item.term === '5' || item.term === '5,5') ? `лет` : `года`}</span></p>
                 <p className='info__text'>{item.form}</p>
               </div>
               <div className='info__item'>
@@ -49,7 +49,7 @@ const NewModalContent = (props) => {
                 <p className='info__text'>Платных мест</p>
               </div>
               <div className='info__item'>
-                <p className='info__value'>{item.price} <span>тыс.руб</span> </p>
+                <p className='info__value'>{item.price} <span>тыс. руб</span> </p>
                 <p className='info__text'>Стоимость</p>
               </div>
             </div>
@@ -96,8 +96,8 @@ const NewModalContent = (props) => {
             {(progDesc.companies) &&
                 <div>
                     <h3>Наши выпускники работают в следующих организациях и учреждениях</h3>
-                    <ul>{progDesc.companies.split('\n').map((item) => (
-                        <li>
+                    <ul>{progDesc.companies.split('\n').map((item, index) => (
+                        <li key={index}>
                             {item}
                         </li>
                     ))}

@@ -18,7 +18,7 @@ const ProgList = (props) => {
                 {prog.info.map((item) => (
                   <div className='info' key={item.id}>
                     <div className='info__item'>
-                      <p className='info__value'>{item.term} <span>{item.term === '5' ? `лет` : `года`}</span></p>
+                      <p className='info__value'>{item.term} <span>{(item.term === '5' || item.term === '5,5')  ? `лет` : `года`}</span></p>
                       <p className='info__text'>{item.form}</p>
                     </div>
                     <div className='info__item'>
@@ -30,7 +30,7 @@ const ProgList = (props) => {
                       <p className='info__text'>Платных мест</p>
                     </div>
                     <div className='info__item'>
-                      <p className='info__value'>{item.price} <span>тыс.руб</span></p>
+                      <p className='info__value'>{item.price} <span>тыс. руб</span></p>
                       <p className='info__text'>Стоимость</p>
                     </div>
                   </div>
