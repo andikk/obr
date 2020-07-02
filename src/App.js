@@ -40,14 +40,44 @@ class App extends PureComponent {
   handleModalClose = () => {
     this.setState({modalIsOpen: false});
     document.body.removeAttribute('style');
-    document.querySelector('._professions-slider').style.zIndex = '10';
-    document.querySelector('header').style.zIndex = '10';
+
+    const professionsSliderLanding = document.querySelector('._professions-slider');
+    const headerLanding = document.querySelector('header');
+    if (professionsSliderLanding !== null && headerLanding !==null) {
+      professionsSliderLanding.style.zIndex = '10';
+      headerLanding.style.zIndex = '10';
+    }
+
+    const searchInputMain = document.querySelector('.header__search-from input'); //1
+    const searchButtonMain = document.querySelector('.header__search-from button'); //2
+    const menuMain = document.querySelector('.menu'); //1
+    if (searchInputMain !== null && searchButtonMain !==null && menuMain !==null) {
+      searchInputMain.style.zIndex = '1';
+      searchButtonMain.style.zIndex = '2';
+      menuMain.style.zIndex = '1';
+    }
+
   };
 
   onAfterModalOpen = () => {
     document.body.style.overflow = 'hidden';
-    document.querySelector('._professions-slider').style.zIndex = '-1';
-    document.querySelector('header').style.zIndex = '-1';
+
+    const professionsSliderLanding = document.querySelector('._professions-slider');
+    const headerLanding = document.querySelector('header');
+    if (professionsSliderLanding !== null && headerLanding !==null) {
+      professionsSliderLanding.style.zIndex = '-1';
+      headerLanding.style.zIndex = '-1';
+    }
+
+    const searchInputMain = document.querySelector('.header__search-from input'); //1
+    const searchButtonMain = document.querySelector('.header__search-from button'); //2
+    const menuMain = document.querySelector('.menu'); //1
+    if (searchInputMain !== null && searchButtonMain !==null && menuMain !==null) {
+      searchInputMain.style.zIndex = '-1';
+      searchButtonMain.style.zIndex = '-2';
+      menuMain.style.zIndex = '-1';
+    }
+
   };
 
   handleSubjectCheckboxClick = (subject, event) => {
