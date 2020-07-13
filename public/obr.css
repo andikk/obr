@@ -1,3 +1,11 @@
+
+.ReactModal__Content.ReactModal__Content--after-open {
+  left: 10px!important;
+  right: 10px!important;
+  top: 10px!important;
+  bottom: 10px!important;
+}
+
 .tabs__btn {
   margin-right: 5rem;
   font-size: 16px;
@@ -93,8 +101,8 @@
   border: none;
   font-size: 3rem;
   position: fixed;
-  right: 66px;
-  top: 34px;
+  right: 20px;
+  top: -5px;
   outline: none;
   z-index: 10;
 }
@@ -107,6 +115,7 @@
 .detail__institute {
   padding-top: 0 !important;
   padding-bottom: 1rem !important;
+  font-size: 1.5rem;
 }
 
 .detail__progname {
@@ -126,7 +135,7 @@
 }
 
 .detail__subject-list {
-  display: flex;
+  display: block;
   list-style: none;
   padding: 0;
 }
@@ -156,6 +165,7 @@
 
 .main-site .subject {
   margin-top: -8px;
+  font-size: 0.8rem;
 }
 
 .main-site .info__item::after, .detail__modal .info__item::after {
@@ -232,6 +242,10 @@
     font-size: 22px;
   }
 
+  .detail__subject-list {
+    display: flex;
+  }
+
 }
 
 @media (min-width: 1450px) {
@@ -242,5 +256,9 @@
 
   .btn-close {
     right: 260px;
+  }
+
+  .main-site .subject {
+    font-size: 1rem;
   }
 }
