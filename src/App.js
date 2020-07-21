@@ -5,6 +5,8 @@ import SubjectsList from "./components/SubjectsList";
 import ReactModal from 'react-modal';
 import NewModalContent from "./components/NewModalContent.jsx";
 import withFetching from "./components/WithFetching";
+import Spinner from "./components/Spinner";
+
 
 class App extends PureComponent {
   constructor(props) {
@@ -127,7 +129,7 @@ class App extends PureComponent {
     }
 
     if (isLoadingProgs || progs === null) {
-      return <p style={{textAlign: "center", paddingTop: "1rem", paddingBottom: "1rem"}}>Загрузка данных ...</p>;
+      return <Spinner/>
     }
 
     let progsToShow = progs.filter((prog) => {
@@ -190,6 +192,7 @@ class App extends PureComponent {
             <ProgList progs={progsToShow} handleModalOpen={this.handleModalOpen}/>
           </div>
         </div>
+
         <ReactModal
           isOpen={modalIsOpen}
           contentLabel="onRequestClose Example"
@@ -197,6 +200,7 @@ class App extends PureComponent {
           onRequestClose={this.handleModalClose}
           ariaHideApp={false}
           portalClassName="detail__modal"
+          closeTimeoutMS={500}
           style={
             { overlay: {backgroundColor: "rgba(27, 26, 26, 0.8)"},
             }
@@ -205,6 +209,7 @@ class App extends PureComponent {
           <button className='btn-close' onClick={this.handleModalClose}>&times;</button>
           <NewModalContent url={APP_URL +'api/prog/' + activeProgId}/>
         </ReactModal>
+
       </div>
     )
   }
