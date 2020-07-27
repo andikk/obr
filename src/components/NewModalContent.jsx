@@ -1,6 +1,7 @@
 import React from 'react';
 import withFetching from "./WithFetching.jsx";
 import {APP_URL} from "../helper";
+import Spinner from "./Spinner";
 
 const NewModalContent = (props) => {
     const {error, isLoading} = props;
@@ -11,7 +12,7 @@ const NewModalContent = (props) => {
     }
 
     if (isLoading || progDesc === null) {
-      return <p style={{textAlign: "center", paddingTop: "1rem", paddingBottom: "1rem"}}>Загрузка данных ...</p>;
+      return <Spinner/>;
     }
 
     return (
