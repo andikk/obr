@@ -6,6 +6,7 @@ import {APP_URL} from "./helper";
 
 ReactDOM.render(
   <React.StrictMode>
+    {/*<App url={APP_URL + '/api'} />*/}
     <App url={APP_URL + 'api/list-abit'} />
   </React.StrictMode>,
   document.getElementById('root')

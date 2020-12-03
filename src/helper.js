@@ -19,7 +19,7 @@ export const CAT_TYPE = {
   "2": "institutes"
 };
 
-//export const APP_URL = 'http://api/';
+//export const APP_URL = 'http://data.web.ncfu.ru/';
 
 export const APP_URL = 'https://edprogs.ncfu.ru/';
 

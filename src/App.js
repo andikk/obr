@@ -113,7 +113,21 @@ class App extends PureComponent {
       .map((item) => ({id: item.id, name: item.name, isActive: false}));
     const subjects = removeDuplicates(allSubjects, "id");
 
-    this.setState({subjects: subjects, filterSubject: []});
+    let rus;
+    const sortedSubjects = subjects.filter((item) => {
+      if (item.name !== 'Русский язык') {
+        return item
+      } else {
+        rus = item;
+      }
+    });
+
+    if (rus) {
+      this.setState({subjects: [rus, ...sortedSubjects], filterSubject: []});
+    } else {
+      this.setState({subjects: subjects, filterSubject: []});
+    }
+
   };
 
   render() {
@@ -208,6 +222,7 @@ class App extends PureComponent {
         >
           <button className='btn-close' onClick={this.handleModalClose}>&times;</button>
           <NewModalContent url={APP_URL +'api/prog/' + activeProgId}/>
+          {/*<NewModalContent url={APP_URL +'/api?id=' + activeProgId}/>*/}
         </ReactModal>
 
       </div>

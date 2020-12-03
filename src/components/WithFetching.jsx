@@ -16,13 +16,9 @@ const withFetching = (Component) => {
 
       this.setState({isLoading: true});
 
-      fetch(this.props.url, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      })
+      fetch(this.props.url)
         .then(response => {
+          console.log(response);
           if (response.ok) {
             return response.json();
           } else {

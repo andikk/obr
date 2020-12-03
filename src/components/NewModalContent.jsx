@@ -121,6 +121,8 @@ const NewModalContent = (props) => {
                               <div className="graduates__image-wrapper">
                                   {(graduate.file) &&
                                     <img alt={graduate.name} className="graduates__image" src={APP_URL + 'uploads/' + graduate.file}/>
+
+                                  // <img alt={graduate.name} className="graduates__image" src={APP_URL  + graduate.file}/>
                                   }
                               </div>
                               <div className="graduates__text">
