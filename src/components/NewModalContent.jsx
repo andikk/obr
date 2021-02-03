@@ -34,6 +34,10 @@ const NewModalContent = (props) => {
           ))}
         </ul>
 
+        {(progDesc.dop_subject) &&
+          <p className="detail__subject-name">{progDesc.dop_subject}</p>
+        }
+
         <div>
           {progDesc.info.map((item) => (
             <div className='info' key={item.id}>
