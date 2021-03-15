@@ -1,3 +1,6 @@
+export const includesAny = (arr, values) => values.some(v => arr.includes(v));
+export const includesAll = (arr, values) => values.every(v => arr.includes(v));
+
 export const removeDuplicates = (originalArray, prop) => {
   let newArray = [];
   let lookupObject  = {};
@@ -18,6 +21,7 @@ export const CAT_TYPE = {
   "1": "subjects",
   "2": "institutes"
 };
+
 
 //export const APP_URL = 'http://data.web.ncfu.ru/';
 

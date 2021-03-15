@@ -1,5 +1,5 @@
 import React, {PureComponent } from 'react';
-import {removeDuplicates, CATS, CAT_TYPE, APP_URL} from "./helper";
+import {removeDuplicates, includesAny, includesAll, CATS, CAT_TYPE, APP_URL} from "./helper";
 import ProgList from "./components/ProgList";
 import SubjectsList from "./components/SubjectsList";
 import ReactModal from 'react-modal';
@@ -146,17 +146,17 @@ class App extends PureComponent {
       return <Spinner/>
     }
 
-    let progsToShow = progs.filter((prog) => {
-      const curCatType = CAT_TYPE[activeCatId];
-
-      let flag = false;
-      filterSubject.forEach((item) => {
-        if (prog[curCatType].findIndex(subj => subj.id === item) !== -1) {
-          flag = true;
-        }
-      });
-      if (flag) return prog;
-    });
+    // let progsToShow = progs.filter((prog) => {
+    //   const curCatType = CAT_TYPE[activeCatId];
+    //
+    //   let flag = false;
+    //   filterSubject.forEach((item) => {
+    //     if (prog[curCatType].findIndex(subj => subj.id === item) !== -1) {
+    //       flag = true;
+    //     }
+    //   });
+    //   if (flag) return prog;
+    // });
 
     // const isInFilter = (prog) => {
     //   const progSubjIds = prog.subjects.map((subj) => subj.id);
@@ -180,8 +180,12 @@ class App extends PureComponent {
     //   }
     // };
 
+    let progsToShow = progs.filter(prog => {
+      const institutesIds = prog.institutes.map(inst=> inst.id);
+      return includesAny(institutesIds, filterSubject);
+    });
+
     if (activeCatId === 1) {
-      const includesAll = (arr, values) => values.every(v => arr.includes(v));
       progsToShow = progs.filter(prog => {
         const subjectIds = prog.subjects.map(subj => subj.id);
         return includesAll(subjectIds, filterSubject);
