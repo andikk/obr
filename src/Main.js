@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import useAxios from 'axios-hooks'
-import {APP_URL, CAT_TYPE, CATS, removeDuplicates} from "./helper";
+import {APP_URL, CAT_TYPE, CATS, includesAll, includesAny, removeDuplicates} from "./helper";
 import ProgList from "./components/ProgList";
 import ReactModal from "react-modal";
 import NewModalContent from "./components/NewModalContent";
@@ -10,6 +10,7 @@ const Main = () => {
   const [activeTabId, setActiveTabId] = useState(1);
   const [checkboxes, setCheckboxes] = useState([]);
   const [filter, setFilter] = useState([]);
+  const [filteredProgs, setFilteredProgs] = useState([]);
 
   const [{ data, loading, error }, refetch] = useAxios(
     'https://edprogs.ncfu.ru/api/list-abit'
@@ -17,11 +18,32 @@ const Main = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data.data[1]);
       onTabClick(1);
     }
-
   }, [data]);
+
+  useEffect(() => {
+    if (data) {
+
+      const progs = data.data;
+      let progsToShow = progs.filter(prog => {
+        const institutesIds = prog.institutes.map(inst=> inst.id);
+        return includesAny(institutesIds, filter);
+      });
+
+      if (activeTabId === 1) {
+        console.log('filter changed');
+        progsToShow = progs.filter(prog => {
+          const subjectIds = prog.subjects.map(subj => subj.id);
+          return includesAll(subjectIds, filter);
+        });
+      }
+
+
+      setFilteredProgs(progsToShow);
+
+    }
+  }, [filter, activeTabId]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error!</p>;
@@ -29,6 +51,8 @@ const Main = () => {
 
   const onTabClick = (tabId) => {
     setActiveTabId(tabId);
+    setFilter([]);
+    setFilteredProgs([]);
     const progs = data.data;
 
     // получаем перечень чекбоксов в зависимости от выбранной вкладки
@@ -44,27 +68,18 @@ const Main = () => {
   };
 
   const onCheckBoxClick = (checkbox, event) => {
-    console.log(event.target.checked);
     // обновляем значению у чекбоксов
     const foundIndex = checkboxes.indexOf(checkbox);
     const updatedCheckboxes = [...checkboxes];
     updatedCheckboxes[foundIndex] = {id: checkbox.id, name: checkbox.name, isChecked: !checkbox.isChecked};
     setCheckboxes(updatedCheckboxes);
 
+    // устанавливаем фильтр
     if (event.target.checked) {
       setFilter(prevFilter => ([...[checkbox.id], ...prevFilter]))
-      // this.setState((prevState) => ({
-      //   filterSubject: [...[subject.id], ...prevState.filterSubject]
-      // }))
     } else {
-      //setFilter(prevFilter => ([...[checkbox.id], ...prevFilter.filter(item => item !== checkbox.id)]))
-      // this.setState((prevState) => ({
-      //   filterSubject: prevState.filterSubject.filter((item) => item !== subject.id)
-      // }))
+      setFilter(prevFilter => ([...prevFilter.filter(item => item !== checkbox.id)]))
     }
-
-    console.log(filter);
-
   };
 
   return (
@@ -85,9 +100,9 @@ const Main = () => {
         <div className="col-md-2">
           <CheckBoxList checkboxes={checkboxes} activeCatId={activeTabId} onCheckBoxClick={onCheckBoxClick}/>
         </div>
-        {/*<div className="col-md-10">*/}
-        {/*  <ProgList progs={progsToShow} handleModalOpen={this.handleModalOpen}/>*/}
-        {/*</div>*/}
+        <div className="col-md-10">
+          <ProgList progs={filteredProgs} handleModalOpen={() => {}}/>
+        </div>
       </div>
 
 
