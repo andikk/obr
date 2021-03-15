@@ -14,17 +14,17 @@ const SubjectsList = (props) => {
         if (subject.name === 'Русский язык') status = true;
 
         return (
-            <Fade>
-            <div key={subject.id} style={{whiteSpace: "nowrap", display: "flex"}}>
-              <input onChange={event => handleSubjectCheckboxClick(subject, event)}
-                     type="checkbox"
-                     id={`checkbox-${subject.id}-${activeCatId}`}
-                     checked={status}
-              />
-              <label style={{whiteSpace: "normal"}} className='subject' htmlFor={`checkbox-${subject.id}-${activeCatId}`}>
-                {subject.name}
-              </label>
-            </div>
+            <Fade  key={subject.id} >
+              <div style={{whiteSpace: "nowrap", display: "flex"}}>
+                <input onChange={event => handleSubjectCheckboxClick(subject, event)}
+                       type="checkbox"
+                       id={`checkbox-${subject.id}-${activeCatId}`}
+                       checked={status}
+                />
+                <label style={{whiteSpace: "normal"}} className='subject' htmlFor={`checkbox-${subject.id}-${activeCatId}`}>
+                  {subject.name}
+                </label>
+              </div>
             </Fade>
 
         )

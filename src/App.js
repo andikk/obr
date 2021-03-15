@@ -158,31 +158,36 @@ class App extends PureComponent {
       if (flag) return prog;
     });
 
-    const isInFilter = (prog) => {
-      const progSubjIds = prog.subjects.map((subj) => subj.id);
-
-      if (filterSubject.length < 2) {
-        let flag = false;
-        filterSubject.forEach((item) => {
-          if (progSubjIds.includes(item)) {
-            flag = true;
-          }
-        });
-
-        if (flag) return true;
-      } else {
-        if (progSubjIds.length === [...filterSubject, 1].length && progSubjIds.sort().every(function(value, index) { return value === [...filterSubject, 1].sort()[index]})) {
-        //if (JSON.stringify(progSubjIds) == JSON.stringify([...filterSubject, 1])) {
-          return true
-        } else {
-          return false
-        }
-      }
-    };
+    // const isInFilter = (prog) => {
+    //   const progSubjIds = prog.subjects.map((subj) => subj.id);
+    //
+    //   if (filterSubject.length < 2) {
+    //     let flag = false;
+    //     filterSubject.forEach((item) => {
+    //       if (progSubjIds.includes(item)) {
+    //         flag = true;
+    //       }
+    //     });
+    //
+    //     if (flag) return true;
+    //   } else {
+    //     if (progSubjIds.length === [...filterSubject, 1].length && progSubjIds.sort().every(function(value, index) { return value === [...filterSubject, 1].sort()[index]})) {
+    //    // if (JSON.stringify(progSubjIds) == JSON.stringify([...filterSubject, 1])) {
+    //       return true
+    //     } else {
+    //       return false
+    //     }
+    //   }
+    // };
 
     if (activeCatId === 1) {
-      progsToShow = progs.filter(isInFilter);
+      const includesAll = (arr, values) => values.every(v => arr.includes(v));
+      progsToShow = progs.filter(prog => {
+        const subjectIds = prog.subjects.map(subj => subj.id);
+        return includesAll(subjectIds, filterSubject);
+      });
     }
+
 
     return (
       <div className='container _block01'>

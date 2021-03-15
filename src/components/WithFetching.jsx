@@ -18,7 +18,6 @@ const withFetching = (Component) => {
 
       fetch(this.props.url)
         .then(response => {
-          console.log(response);
           if (response.ok) {
             return response.json();
           } else {

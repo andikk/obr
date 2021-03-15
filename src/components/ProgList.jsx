@@ -3,8 +3,6 @@ import Fade from 'react-reveal/Fade';
 
 const ProgList = (props) => {
   const {progs, handleModalOpen} = props;
-
-
   return (
     <React.Fragment>
       {(progs.length === 0) && <p style={{textAlign: "center"}}>Выберите предмет, институт или факультет</p>}
@@ -14,9 +12,9 @@ const ProgList = (props) => {
             <div className='prog-list'>
 
                   {progs.map((prog) => (
-                      <Fade>
+                      <Fade key={prog.id}>
 
-                        <div className='prog-list__item' key={prog.id}>
+                        <div className='prog-list__item' >
 
                           <p className='prog-list__name-container'>{prog.name}</p>
 
