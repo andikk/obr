@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Main from './Main';
 import * as serviceWorker from './serviceWorker';
-import {APP_URL} from "./helper";
+
 
 ReactDOM.render(
   <React.StrictMode>
-    {/*<App url={APP_URL + '/api'} />*/}
-    <App url={APP_URL + 'api/list-abit'} />
+    <Main/>
   </React.StrictMode>,
   document.getElementById('root')
 );

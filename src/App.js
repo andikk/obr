@@ -1,7 +1,7 @@
 import React, {PureComponent } from 'react';
 import {removeDuplicates, includesAny, includesAll, CATS, CAT_TYPE, APP_URL} from "./helper";
 import ProgList from "./components/ProgList";
-import SubjectsList from "./components/SubjectsList";
+import SubjectsList from "./components/CheckBoxList";
 import ReactModal from 'react-modal';
 import NewModalContent from "./components/NewModalContent.jsx";
 import withFetching from "./components/WithFetching";
@@ -99,6 +99,8 @@ class App extends PureComponent {
         filterSubject: prevState.filterSubject.filter((item) => item !== subject.id)
       }))
      }
+
+    console.log(this.state.filterSubject);
   };
 
   handleCatButtonClick = (selectedCatId) => {
@@ -146,39 +148,6 @@ class App extends PureComponent {
       return <Spinner/>
     }
 
-    // let progsToShow = progs.filter((prog) => {
-    //   const curCatType = CAT_TYPE[activeCatId];
-    //
-    //   let flag = false;
-    //   filterSubject.forEach((item) => {
-    //     if (prog[curCatType].findIndex(subj => subj.id === item) !== -1) {
-    //       flag = true;
-    //     }
-    //   });
-    //   if (flag) return prog;
-    // });
-
-    // const isInFilter = (prog) => {
-    //   const progSubjIds = prog.subjects.map((subj) => subj.id);
-    //
-    //   if (filterSubject.length < 2) {
-    //     let flag = false;
-    //     filterSubject.forEach((item) => {
-    //       if (progSubjIds.includes(item)) {
-    //         flag = true;
-    //       }
-    //     });
-    //
-    //     if (flag) return true;
-    //   } else {
-    //     if (progSubjIds.length === [...filterSubject, 1].length && progSubjIds.sort().every(function(value, index) { return value === [...filterSubject, 1].sort()[index]})) {
-    //    // if (JSON.stringify(progSubjIds) == JSON.stringify([...filterSubject, 1])) {
-    //       return true
-    //     } else {
-    //       return false
-    //     }
-    //   }
-    // };
 
     let progsToShow = progs.filter(prog => {
       const institutesIds = prog.institutes.map(inst=> inst.id);

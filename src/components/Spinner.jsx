@@ -1,8 +1,6 @@
 import React from 'react';
 
 const Spinner = () => {
-
-
     return (
         <div style={{textAlign: "center"}}>
             <div className="loadingio-spinner-spinner-8xyul1xfgha">
