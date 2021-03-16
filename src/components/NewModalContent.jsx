@@ -1,17 +1,26 @@
-import React from 'react';
-import withFetching from "./WithFetching.jsx";
+import React, {useEffect, useState} from 'react';
 import {APP_URL} from "../helper";
 import Spinner from "./Spinner";
+import useAxios from 'axios-hooks'
 
-const NewModalContent = (props) => {
-    const {error, isLoading} = props;
-    const progDesc = props.data;
+const NewModalContent = ({selectedProgId}) => {
+    const [progDesc, setProgDesc] = useState();
+    const [{ data, loading, error }] = useAxios(
+      APP_URL +'api/prog/' + selectedProgId
+    );
+
+    useEffect(() => {
+        if (data) {
+          setProgDesc(data.data);
+        }
+    }, [data]);
+
 
     if (error) {
       return <p  style={{textAlign: "center", paddingTop: "1rem", paddingBottom: "1rem"}}>Ошибка загрузки данных. Описание ошибки: {error.message}</p>;
     }
 
-    if (isLoading || progDesc === null) {
+    if (loading || !progDesc) {
       return <Spinner/>;
     }
 
@@ -23,7 +32,6 @@ const NewModalContent = (props) => {
 
         <h3>Профили</h3>
         <p>{progDesc.profile}</p>
-
 
         <h3>Вступительные испытания</h3>
         <ul className="detail__subject-list">
@@ -110,7 +118,6 @@ const NewModalContent = (props) => {
                 </div>
             }
 
-
             {(progDesc.graduates.length > 0) &&
                 <div>
                     {(progDesc.graduate) &&
@@ -125,8 +132,6 @@ const NewModalContent = (props) => {
                               <div className="graduates__image-wrapper">
                                   {(graduate.file) &&
                                     <img alt={graduate.name} className="graduates__image" src={APP_URL + 'uploads/' + graduate.file}/>
-
-                                  // <img alt={graduate.name} className="graduates__image" src={APP_URL  + graduate.file}/>
                                   }
                               </div>
                               <div className="graduates__text">
@@ -138,11 +143,9 @@ const NewModalContent = (props) => {
                     </div>
                 </div>
             }
-
         </div>
       </div>
     )
 };
 
-export {NewModalContent};
-export default withFetching(NewModalContent);
+export default NewModalContent;

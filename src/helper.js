@@ -23,7 +23,5 @@ export const CAT_TYPE = {
 };
 
 
-//export const APP_URL = 'http://data.web.ncfu.ru/';
-
 export const APP_URL = 'https://edprogs.ncfu.ru/';
 
