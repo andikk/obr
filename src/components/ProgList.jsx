@@ -32,7 +32,7 @@ const ProgList = ({progs, handleModalOpen} ) => {
                           <p className='info__value'>{item.paidAmount}</p>
                           <p className='info__text'>Платных мест</p>
                         </div>
-                        <div className='info__item'>
+                        <div className='info__item' style={{display: "none"}}>
                           <p className='info__value'>{item.price} <span>тыс. руб</span></p>
                           <p className='info__text'>Стоимость</p>
                         </div>

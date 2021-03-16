@@ -89,7 +89,7 @@ const Main = () => {
         if (activeTabId === 1) {
           return [1, ...[checkbox.id], ...prevFilter.filter(item => item !== 1)];
         }
-        return [...[checkbox.id], ...prevFilter.filter(item => item !== 1)];
+        return [...[checkbox.id], ...prevFilter];
 
       })
     } else {
