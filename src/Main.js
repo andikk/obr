@@ -41,7 +41,7 @@ const Main = () => {
         progsToShow = progs.filter(prog => {
           const subjectIds = prog.subjects.map(subj => subj.id);
           return includesAll(subjectIds, filter);
-          });
+        });
       }
       setFilteredProgs(progsToShow);
 
