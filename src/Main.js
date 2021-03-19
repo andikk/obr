@@ -38,10 +38,15 @@ const Main = () => {
       // фильтрация программ для предметов:
       // отображаются программы, в которых присутствуют ВСЕ предметы, отмеченные в фильре
       if (activeTabId === 1) {
+
         progsToShow = progs.filter(prog => {
           const subjectIds = prog.subjects.map(subj => subj.id);
           return includesAll(subjectIds, filter);
         });
+
+        if (filter.length === 0)  {
+          progsToShow = [];
+        }
       }
       setFilteredProgs(progsToShow);
 

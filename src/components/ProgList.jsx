@@ -21,7 +21,7 @@ const ProgList = ({progs, handleModalOpen} ) => {
                       <div className='info' key={item.id}>
                         <div className='info__item'>
                           <p className='info__value'>{item.term}
-                            <span>{(item.term === '5' || item.term === '5,5') ? `лет` : `года`}</span></p>
+                            <span>{(item.term === '5' || item.term === '5,5' || item.term === '6') ? ` лет` : ` года`}</span></p>
                           <p className='info__text'>{item.form}</p>
                         </div>
                         <div className='info__item'>
