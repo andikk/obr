@@ -3,7 +3,7 @@ import {APP_URL} from "../helper";
 import Spinner from "./Spinner";
 import useAxios from 'axios-hooks'
 
-const NewModalContent = ({selectedProgId}) => {
+const ProgDetail = ({selectedProgId}) => {
     const [progDesc, setProgDesc] = useState();
     const [{ data, loading, error }] = useAxios(
       APP_URL +'api/prog/' + selectedProgId
@@ -148,4 +148,4 @@ const NewModalContent = ({selectedProgId}) => {
     )
 };
 
-export default NewModalContent;
+export default ProgDetail;

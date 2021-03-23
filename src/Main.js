@@ -3,7 +3,7 @@ import useAxios from 'axios-hooks'
 import {APP_URL, CAT_TYPE, CATS, includesAll, includesAny, removeDuplicates} from "./helper";
 import ProgList from "./components/ProgList";
 import ReactModal from "react-modal";
-import NewModalContent from "./components/NewModalContent";
+import ProgDetail from "./components/ProgDetail";
 import CheckBoxList from './components/CheckBoxList';
 import Spinner from "./components/Spinner";
 
@@ -187,7 +187,7 @@ const Main = () => {
         }
       >
         <button className='btn-close' onClick={handleModalClose}>&times;</button>
-        <NewModalContent selectedProgId = {selectedProgId}/>
+        <ProgDetail selectedProgId = {selectedProgId}/>
       </ReactModal>
     </div>
   )
