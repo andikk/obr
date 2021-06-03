@@ -25,7 +25,7 @@ const ProgItem = ({prog, handleModalOpen}) => {
                 <p className='info__value'>{item.paidAmount}</p>
                 <p className='info__text'>Платных мест</p>
               </div>
-              <div className='info__item' style={{display: "none"}}>
+              <div className='info__item'>
                 <p className='info__value'>{item.price} <span>тыс. руб</span></p>
                 <p className='info__text'>Стоимость</p>
               </div>
